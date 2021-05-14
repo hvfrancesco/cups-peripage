@@ -59,6 +59,7 @@ def read_ras3(rdata):
             for b in struct_data
         ]
         header = CupsRas3._make(data)
+        
 
         # Read image data of this page into a bytearray
         imgdata = rdata[1796:1796 + (header.cupsWidth * header.cupsHeight * header.cupsBitsPerPixel // 8)]
@@ -89,6 +90,9 @@ if peripage.isConnected():
 
 for i, datatuple in enumerate(pages):
     (header, imgdata) = datatuple
+    
+    contrast = header.cupsInteger1
+    logging.debug('contrast = '+str(contrast))
 
     #if header.cupsColorSpace != 0 or header.cupsNumColors != 1:
     #    raise ValueError('Invalid color space, only monocolor supported')
