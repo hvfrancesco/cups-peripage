@@ -8,7 +8,7 @@ from PIL import Image, ImageOps
 
 # peripage imports
 import ppa6
-
+import time
 import logging
 
 
@@ -72,6 +72,21 @@ def read_ras3(rdata):
 
 pages = read_ras3(sys.stdin.buffer.read())
 
+connected = False
+peripageType = ppa6.PrinterType.A6p
+timeout = 5.0
+pausa = 2.0
+mac = '02:03:04:59:34:FA'
+contrast = 1
+break_l = 100
+
+peripage = ppa6.Printer(mac, peripageType, timeout)
+peripage.connect()
+peripage.reset()
+if peripage.isConnected():
+    connected = True
+    
+
 for i, datatuple in enumerate(pages):
     (header, imgdata) = datatuple
 
@@ -83,12 +98,22 @@ for i, datatuple in enumerate(pages):
 
     if np.any(np.logical_and(npixels > 10, npixels < 245)):
         im = Image.fromarray(npixels, 'L')
-        im.show() #debug
+        om = ImageOps.mirror((im.rotate(270, expand=True)))
+        om.save('/tmp/peripage_'+str(i)+'.png') #debug
         
-        ImageOps.mirror((im.rotate(270, expand=True))).save('/tmp/peripage.png') #debug
+        if connected:
+            peripage.setConcentration(contrast)
+            peripage.printImage(om)
+            peripage.printBreak(break_l)
+            time.sleep(pausa)
+        else:
+            logging.debug('printer not connected') #debug
+               
         logging.debug('page processed') #debug
-        im = im.convert('1', dither=1)
-        npixels = np.array(im.getdata()).reshape((header.cupsWidth, header.cupsHeight))
+        
+      
+        #im = im.convert('1', dither=1)
+        #npixels = np.array(im.getdata()).reshape((header.cupsWidth, header.cupsHeight))
         
 '''
     sys.stdout.buffer.write(b'<CB>')
