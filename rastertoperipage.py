@@ -4,11 +4,17 @@ from collections import namedtuple
 from struct import unpack
 
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 
 # peripage imports
 import ppa6
 
+import logging
+
+
+logging.basicConfig(filename='/tmp/peripage.log', level=logging.DEBUG)
+
+logging.debug('called peripage filter')
 
 CupsRas3 = namedtuple(
     # Documentation at https://www.cups.org/doc/spec-raster.html
@@ -78,6 +84,9 @@ for i, datatuple in enumerate(pages):
     if np.any(np.logical_and(npixels > 10, npixels < 245)):
         im = Image.fromarray(npixels, 'L')
         im.show() #debug
+        
+        ImageOps.mirror((im.rotate(270, expand=True))).save('/tmp/peripage.png') #debug
+        logging.debug('page processed') #debug
         im = im.convert('1', dither=1)
         npixels = np.array(im.getdata()).reshape((header.cupsWidth, header.cupsHeight))
         
