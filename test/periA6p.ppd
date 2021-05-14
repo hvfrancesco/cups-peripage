@@ -1,0 +1,69 @@
+*PPD-Adobe: "4.3"
+*%%%% PPD file for Peripage A6+ with CUPS.
+*%%%% Created by the CUPS PPD Compiler CUPS v2.2.7.
+*FormatVersion: "4.3"
+*FileVersion: "1.0"
+*LanguageVersion: English
+*LanguageEncoding: ISOLatin1
+*PCFileName: "periA6p.ppd"
+*Product: "(Peripage A6+)"
+*Manufacturer: "Peripage"
+*ModelName: "Peripage A6+"
+*ShortNickName: "Peripage A6+"
+*NickName: "Peripage A6+"
+*PSVersion: "(3010.000) 0"
+*LanguageLevel: "3"
+*ColorDevice: False
+*DefaultColorSpace: Gray
+*FileSystem: False
+*Throughput: "1"
+*LandscapeOrientation: Plus90
+*TTRasterizer: Type42
+*% Driver-defined attributes...
+*cupsVersion: 2.2
+*cupsModelNumber: 0
+*cupsManualCopies: False
+*cupsFilter: "application/vnd.cups-raster 100 rastertoperipage"
+*cupsLanguages: "en"
+*OpenUI *PageSize/Media Size: PickOne
+*OrderDependency: 10 AnySetup *PageSize
+*DefaultPageSize: Letter
+*PageSize ticket2x2.7/Ticket 2x2.7in: "<</PageSize[137 193]/ImagingBBox null>>setpagedevice"
+*CloseUI: *PageSize
+*OpenUI *PageRegion/Media Size: PickOne
+*OrderDependency: 10 AnySetup *PageRegion
+*DefaultPageRegion: Letter
+*PageRegion ticket2x2.7/Ticket 2x2.7in: "<</PageSize[137 193]/ImagingBBox null>>setpagedevice"
+*CloseUI: *PageRegion
+*DefaultImageableArea: Letter
+*ImageableArea ticket2x2.7/Ticket 2x2.7in: "1 2 136.419998168945 193"
+*DefaultPaperDimension: Letter
+*PaperDimension ticket2x2.7/Ticket 2x2.7in: "136.419998168945 193"
+*MaxMediaWidth: "0"
+*MaxMediaHeight: "0"
+*HWMargins: 0 0 0 0
+*CustomPageSize True: "pop pop pop <</PageSize[5 -2 roll]/ImagingBBox null>>setpagedevice"
+*ParamCustomPageSize Width: 1 points 0 0
+*ParamCustomPageSize Height: 2 points 0 0
+*ParamCustomPageSize WidthOffset: 3 points 0 0
+*ParamCustomPageSize HeightOffset: 4 points 0 0
+*ParamCustomPageSize Orientation: 5 int 0 0
+*OpenUI *Resolution/Resolution: PickOne
+*OrderDependency: 10 AnySetup *Resolution
+*DefaultResolution: 304dpi
+*Resolution 304dpi/304dpi: "<</HWResolution[304 304]/cupsBitsPerColor 8/cupsRowCount 0/cupsRowFeed 0/cupsRowStep 0>>setpagedevice"
+*CloseUI: *Resolution
+*OpenUI *ColorModel/Color Mode: PickOne
+*OrderDependency: 10 AnySetup *ColorModel
+*DefaultColorModel: Gray
+*ColorModel Gray/Grayscale: "<</cupsColorSpace 0/cupsColorOrder 0/cupsCompression 0>>setpagedevice"
+*CloseUI: *ColorModel
+*OpenUI *fooCutMedia/Cut Labels: PickOne
+*OrderDependency: 10 AnySetup *fooCutMedia
+*DefaultfooCutMedia: Job
+*fooCutMedia Never/Never cut media: "<</CutMedia 0>>setpagedevice"
+*fooCutMedia Job/Cut after job: "<</CutMedia 2>>setpagedevice"
+*fooCutMedia Page/Cut after every ticket: "<</CutMedia 4>>setpagedevice"
+*CloseUI: *fooCutMedia
+*DefaultFont: Courier
+*% End of periA6p.ppd, 02632 bytes.

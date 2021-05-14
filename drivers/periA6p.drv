@@ -1,0 +1,27 @@
+#include <font.defs>
+#include <media.defs>
+{
+  Manufacturer "Peripage"
+  ModelName "Peripage A6+"
+  PCFileName "periA6p.ppd"
+  Version 1.0
+  Attribute "NickName" "" "Peripage A6+"
+
+  Filter "application/vnd.cups-raster 100 rastertoperipage"
+  *Resolution - 8 0 0 0 304dpi
+  ColorModel Gray/Grayscale w chunky 0
+
+  Group "General/General"
+    Option "fooCutMedia/Cut Labels" PickOne AnySetup 10.0
+      Choice "Never/Never cut media" "<</CutMedia 0>>setpagedevice"
+      *Choice "Job/Cut after job" "<</CutMedia 2>>setpagedevice"
+      Choice "Page/Cut after every ticket" "<</CutMedia 4>>setpagedevice"
+
+  CustomMedia "ticket2x2.7/Ticket 2x2.7in" 136.42 193.00 1.00 2.00 0.00 0.00 "<</PageSize[137 193]/ImagingBBox null>>setpagedevice" "<</PageSize[137 193]/ImagingBBox null>>setpagedevice"
+  
+
+  VariablePaperSize Yes
+  HWMargins 0.00 0.00 0.00 0.00
+  MinSize 0.00 0.00
+  MaxSize 0.00 0.00
+}
