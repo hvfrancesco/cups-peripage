@@ -32,7 +32,7 @@ in the project's main directory.
 Installation
 ------------
 
-In order to install manually on linux do more or less the following:
+In order to install manually on linux do more or less the following::
 
 	sudo cp peribakend.py /usr/lib/cups/backend/peri
 	sudo chmod 0700 /usr/lib/cups/backend/peri
