@@ -34,15 +34,17 @@ Installation
 
 In order to install manually on linux do more or less the following:
 
-sudo cp peribakend.py /usr/lib/cups/backend/peri
-sudo chmod 0700 /usr/lib/cups/backend/peri
-sudo cp rastertoperipage.py /usr/lib/cups/filter/rastertoperipage
-sudo chmod 0755 /usr/lib/cups/filter/rastertoperipage
+	sudo cp peribakend.py /usr/lib/cups/backend/peri
+	sudo chmod 0700 /usr/lib/cups/backend/peri
+	sudo cp rastertoperipage.py /usr/lib/cups/filter/rastertoperipage
+	sudo chmod 0755 /usr/lib/cups/filter/rastertoperipage
 
-copy ppd.gz file to /usr/share/cups/model/
+	copy ppd.gz file to /usr/share/cups/model/
 
-restart cups
-create a 'peripage' printer choosing 'peripage therma printer' using gui or lpadmin and set 'peri://' as protocol
+	sudo service restart cups
+	
+create a 'peripage' printer choosing 'peripage therma printer' using gui or lpadmin and set 'peri://' as protocol.
+
 choose 'peripage' driver. At present the ppd file only exists for A6p (304dpi) model.
 
 mac number for the moment is hardcoded in peribakend.py file, make sure to change it according to your printer before installing.
