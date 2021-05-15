@@ -7,14 +7,13 @@ import numpy as np
 from PIL import Image, ImageOps
 
 # peripage imports
-import ppa6
-import time
+
 import logging
 
 
-logging.basicConfig(filename='/tmp/peripage.log', level=logging.DEBUG)
+#logging.basicConfig(filename='/tmp/peripage.log', level=logging.DEBUG)
 
-logging.debug('called peripage filter')
+#logging.debug('called peripage filter')
 
 CupsRas3 = namedtuple(
     # Documentation at https://www.cups.org/doc/spec-raster.html
@@ -73,20 +72,6 @@ def read_ras3(rdata):
 
 pages = read_ras3(sys.stdin.buffer.read())
 
-connected = False
-peripageType = ppa6.PrinterType.A6p
-timeout = 5.0
-pausa = 2.0
-mac = '02:03:04:59:34:FA'
-contrast = 1
-break_l = 100
-
-peripage = ppa6.Printer(mac, peripageType, timeout)
-peripage.connect()
-peripage.reset()
-if peripage.isConnected():
-    connected = True
-    
 
 for i, datatuple in enumerate(pages):
     (header, imgdata) = datatuple
@@ -94,8 +79,6 @@ for i, datatuple in enumerate(pages):
     contrast = header.cupsInteger1
     logging.debug('contrast = '+str(contrast))
 
-    #if header.cupsColorSpace != 0 or header.cupsNumColors != 1:
-    #    raise ValueError('Invalid color space, only monocolor supported')
 
     npdata = np.frombuffer(imgdata, dtype=np.uint8)
     npixels = npdata.reshape((header.cupsHeight, header.cupsWidth)).transpose()
@@ -103,39 +86,14 @@ for i, datatuple in enumerate(pages):
     if np.any(np.logical_and(npixels > 10, npixels < 245)):
         im = Image.fromarray(npixels, 'L')
         om = ImageOps.mirror((im.rotate(270, expand=True)))
-        om.save('/tmp/peripage_'+str(i)+'.png') #debug
         
-        if connected:
-            peripage.setConcentration(contrast)
-            peripage.printImage(om)
-            peripage.printBreak(break_l)
-            time.sleep(pausa)
-        else:
-            logging.debug('printer not connected') #debug
-               
-        logging.debug('page processed') #debug
+        c = contrast.to_bytes(1, 'big')     
+        w = om.width.to_bytes(2, 'big')
+        h = om.height.to_bytes(2, 'big')
+        data = b"".join([c,w,h,om.tobytes()])
         
-      
-        #im = im.convert('1', dither=1)
-        #npixels = np.array(im.getdata()).reshape((header.cupsWidth, header.cupsHeight))
+        sys.stdout.buffer.write(data)
         
-'''
-    sys.stdout.buffer.write(b'<CB>')
-    for yoffset in range(0, npixels.shape[1], 8):
-        row_octet = np.zeros(npixels.shape[0], dtype=np.uint8)
-        for j in range(8):
-            row_blacks = (npixels[:, min(yoffset + j, npixels.shape[1] -1)] < 128).astype(np.uint8)
-            row_octet = np.bitwise_or(row_octet, np.left_shift(row_blacks, 7 - j))
-        if row_octet.any():
-            # FGL: <RCy,x>: Move to correct position
-            # FGL: <Gnn>: nn bytes of graphics are followinga
-            sys.stdout.buffer.write('<RC{},{}><G{}>'.format(yoffset, 0, row_octet.shape[0]).encode())
-            sys.stdout.buffer.write(row_octet.tostring())
-
-    if header.CutMedia in (1, 2, 3) and i == len(pages) - 1:  # Cut after last ticket of file/job/set
-        sys.stdout.buffer.write(b'<p>')
-    elif header.CutMedia == 4:  # Cut after page
-        sys.stdout.buffer.write(b'<p>')
-    else:  # Do not cut
-        sys.stdout.buffer.write(b'<q>')
-'''
+        #om.save('/tmp/peripage_'+str(i)+'.png') #debug    
+        #logging.debug('page processed '+str(i)) #debug
+ 
