@@ -12,6 +12,7 @@ import logging
 
 
 #logging.basicConfig(filename='/tmp/peripage.log', level=logging.DEBUG)
+#logging.basicConfig(filename='peripage.log', level=logging.DEBUG)
 
 #logging.debug('called peripage filter')
 
@@ -77,7 +78,7 @@ for i, datatuple in enumerate(pages):
     (header, imgdata) = datatuple
     
     contrast = header.cupsInteger1
-    logging.debug('contrast = '+str(contrast))
+    #logging.debug('contrast = '+str(contrast))
 
 
     npdata = np.frombuffer(imgdata, dtype=np.uint8)
@@ -91,7 +92,8 @@ for i, datatuple in enumerate(pages):
         w = om.width.to_bytes(2, 'big')
         h = om.height.to_bytes(2, 'big')
         data = b"".join([c,w,h,om.tobytes()])
-        
+
+        #logging.debug ('dati inviati ' + str(len(data)))
         sys.stdout.buffer.write(data)
         
         #om.save('/tmp/peripage_'+str(i)+'.png') #debug    

@@ -103,3 +103,5 @@ ENV/
 ppd/
 .idea/
 deb.tmp/
+test/*.ras
+test/*.raster
