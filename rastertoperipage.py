@@ -78,7 +78,6 @@ for i, datatuple in enumerate(pages):
     (header, imgdata) = datatuple
     
     contrast = header.cupsInteger1
-    #logging.debug('contrast = '+str(contrast))
 
 
     npdata = np.frombuffer(imgdata, dtype=np.uint8)
@@ -93,9 +92,10 @@ for i, datatuple in enumerate(pages):
         h = om.height.to_bytes(2, 'big')
         data = b"".join([c,w,h,om.tobytes()])
 
-        #logging.debug ('dati inviati ' + str(len(data)))
+        sys.stderr.write ('DEBUG: Peripage dati inviati ' + str(len(data)) + '\n')
+        sys.stderr.flush()
+
         sys.stdout.buffer.write(data)
         
-        #om.save('/tmp/peripage_'+str(i)+'.png') #debug    
-        #logging.debug('page processed '+str(i)) #debug
- 
+        #om.save('/tmp/peripage_'+str(i)+'.png') #debug
+        

@@ -48,7 +48,7 @@ if __name__ == '__main__':
 	
     #logging.basicConfig(filename='/tmp/peripage_bak.log', level=logging.DEBUG)
     #logging.basicConfig(filename='backend.log', level=logging.DEBUG)
-    #logging.debug('called peripage backend')
+
     connected = False
     
     if len(sys.argv) == 1:
@@ -57,18 +57,20 @@ if __name__ == '__main__':
     else:
         uri = os.getenv('DEVICE_URI')
         cupsprintername = os.getenv('PRINTER')
-    
-        #logging.debug(uri)
-        #logging.debug(cupsprintername)    
+        sys.stderr.write('DEBUG: Peripage uri = ' + uri + '\n')
+        sys.stderr.write('DEBUG: Peripage name = ' + cupsprintername + '\n')
+        sys.stderr.flush()
 
         peripageType = ppa6.PrinterType.A6p
         timeout = 5.0
         pausa = 2.0
         mac = '02:03:04:59:34:FA'
+        #mac = uri[7:]
+        sys.stderr.write('DEBUG: Peripage MAC ADDRESS = ' + mac + '\n')
+        sys.stderr.flush()
         contrast = 1
         break_l = 100
-    
-         
+
         peripage = ppa6.Printer(mac, peripageType, timeout)
         
         s = socket.socket(socket.AF_BLUETOOTH, socket.SOCK_STREAM, socket.BTPROTO_RFCOMM)
@@ -81,17 +83,15 @@ if __name__ == '__main__':
         #peripage.connect()
         peripage.reset()
     
-        #logging.debug('connected')
+        sys.stderr.write('DEBUG: Peripage connected\n')
+        sys.stderr.flush()
         
         #read_img(sys.stdin.buffer.read())
         
         
         while True:
             dati = sys.stdin.buffer.read()
-            #logging.debug ('dati letti: '+str(len(dati)))
+            sys.stderr.write ('DEBUG: Peripage dati letti: '+str(len(dati)) + '\n')
             data = read_img(dati)
             if not data:
                 break
-        
-			
-

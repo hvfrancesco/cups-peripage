@@ -21,7 +21,7 @@
       *Choice "Medium" "<</cupsInteger0 1>>setpagedevice"
       Choice "Dark" "<</cupsInteger0 2>>setpagedevice"
 
-  CustomMedia "ticket2x2.7/Ticket 2x2.7in" 136.42 193.00 1.00 2.00 0.00 0.00 "<</PageSize[137 193]/ImagingBBox null>>setpagedevice" "<</PageSize[137 193]/ImagingBBox null>>setpagedevice"
+  CustomMedia "ticket2x2.7/Ticket 2x2.7in" 136.42 193.00 0.00 0.00 0.00 0.00 "<</PageSize[137 193]/ImagingBBox null>>setpagedevice" "<</PageSize[137 193]/ImagingBBox null>>setpagedevice"
   
 
   VariablePaperSize Yes
